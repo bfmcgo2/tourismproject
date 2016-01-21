@@ -1,0 +1,89 @@
+@import "_variables";
+@import "_utils";
+@import "_ctabutton";
+
+
+body {
+	// #raphael{
+	//     position:absolute;
+	//     left:50%;
+	//     top:0;
+	//     transform:translate(-50%);
+	//     width:1000px;
+	//     height:500px;
+	//     margin:0 auto;
+	// }
+
+	#map-stage{
+		position:absolute;
+		left:50%;
+		top:0;
+		transform:translateX(-50%);
+		width:1000px;
+		height:500px;
+	}
+
+	#us-map{
+	    position:absolute;
+	    left:50%;
+	    bottom:0%;
+	    transform:translate(-50%);
+	    width:1000px;
+	    height:auto;
+	}
+
+
+	svg{
+		.state 
+		{
+			fill:#fff;
+			stroke:#000;
+			stroke-width:1px;
+			stroke-opacity:1;
+			stroke-linejoin:round;
+			stroke-dasharray:none;
+		}
+
+		.state-stage{
+			display:none;
+		}
+
+		.state-stage#CA-stage{
+			display:block;
+		}
+
+		.territory
+		{
+			opacity:0;
+			fill:#E0E0E0;
+			stroke:#646464;
+			stroke-width:1;
+			stroke-opacity:1;
+		}
+
+		.territoryborder
+		{
+			opacity:0;
+			fill:none;
+			stroke:#A9A9A9;
+			stroke-width:2;
+		}
+
+		.border
+		{
+			opacity:0;
+			fill:none;
+			stroke:#A9A9A9;
+			stroke-width:2;
+		}
+
+		.circle
+		{
+		   opacity:1;
+		   fill:#E0E0E0;
+		   stroke:#646464;
+		   stroke-width:1;
+		}
+	}
+}
+

@@ -1,0 +1,48 @@
+// for my uls
+.reset-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.center {
+	margin: 0 auto;
+	text-align: center;
+}
+
+
+* {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.clearfix:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+
+
+
+
+
+.col-1-4{
+	width:19.704433%;
+	float:left;
+}
+
+
+
+.right{
+	margin-right:0;
+}
+.left{
+	float:left;
+	margin-left:0;
+}
+
+
+
+
+
