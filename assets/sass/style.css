@@ -28,51 +28,63 @@
   margin-left: 0; }
 
 /* primary CTA ribbon */
-body #map-stage {
+body #landing-page {
   position: absolute;
-  left: 50%;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  background: #fff; }
+  body #landing-page #map-stage {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 1000px;
+    height: 500px; }
+  body #landing-page #us-map {
+    position: absolute;
+    left: 50%;
+    bottom: 0%;
+    transform: translate(-50%);
+    width: 800px;
+    height: auto; }
+  body #landing-page svg .state {
+    fill: #fff;
+    stroke: #000;
+    stroke-width: 1px;
+    stroke-opacity: 1;
+    stroke-linejoin: round;
+    stroke-dasharray: none; }
+  body #landing-page svg .state-stage {
+    display: none; }
+  body #landing-page svg .state-stage#CA-stage {
+    display: block; }
+  body #landing-page svg .territory {
+    opacity: 0;
+    fill: #E0E0E0;
+    stroke: #646464;
+    stroke-width: 1;
+    stroke-opacity: 1; }
+  body #landing-page svg .territoryborder {
+    opacity: 0;
+    fill: none;
+    stroke: #A9A9A9;
+    stroke-width: 2; }
+  body #landing-page svg .border {
+    opacity: 0;
+    fill: none;
+    stroke: #A9A9A9;
+    stroke-width: 2; }
+  body #landing-page svg .circle {
+    opacity: 1;
+    fill: #E0E0E0;
+    stroke: #646464;
+    stroke-width: 1; }
+body #map {
+  position: absolute;
   top: 0;
-  transform: translateX(-50%);
-  width: 1000px;
-  height: 500px; }
-body #us-map {
-  position: absolute;
-  left: 50%;
-  bottom: 0%;
-  transform: translate(-50%);
-  width: 1000px;
-  height: auto; }
-body svg .state {
-  fill: #fff;
-  stroke: #000;
-  stroke-width: 1px;
-  stroke-opacity: 1;
-  stroke-linejoin: round;
-  stroke-dasharray: none; }
-body svg .state-stage {
-  display: none; }
-body svg .state-stage#CA-stage {
-  display: block; }
-body svg .territory {
-  opacity: 0;
-  fill: #E0E0E0;
-  stroke: #646464;
-  stroke-width: 1;
-  stroke-opacity: 1; }
-body svg .territoryborder {
-  opacity: 0;
-  fill: none;
-  stroke: #A9A9A9;
-  stroke-width: 2; }
-body svg .border {
-  opacity: 0;
-  fill: none;
-  stroke: #A9A9A9;
-  stroke-width: 2; }
-body svg .circle {
-  opacity: 1;
-  fill: #E0E0E0;
-  stroke: #646464;
-  stroke-width: 1; }
+  z-index: 1;
+  width: 100%;
+  height: 100%; }
 
 /*# sourceMappingURL=style.css.map */
