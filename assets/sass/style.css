@@ -54,7 +54,8 @@ body #landing-page {
     stroke-width: 1px;
     stroke-opacity: 1;
     stroke-linejoin: round;
-    stroke-dasharray: none; }
+    stroke-dasharray: none;
+    cursor: pointer; }
   body #landing-page svg .state-stage {
     display: none; }
   body #landing-page svg .state-stage#CA-stage {
