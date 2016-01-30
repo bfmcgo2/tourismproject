@@ -1,0 +1,12 @@
+var pin_cluster = {
+	"type":"FeatureCollection",
+	"features":[{
+		"type":"Feature",
+		"properties":{},
+		"geometry":{
+			"type":"Point",
+			"coordinates":
+				[-111.884765625,40.74725696280421]
+		}
+	}]
+}

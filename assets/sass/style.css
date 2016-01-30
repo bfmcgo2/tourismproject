@@ -1,3 +1,6 @@
+html {
+  height: 100%; }
+
 .reset-list {
   margin: 0;
   padding: 0;
@@ -28,64 +31,90 @@
   margin-left: 0; }
 
 /* primary CTA ribbon */
-body #landing-page {
-  position: absolute;
+body {
   height: 100%;
-  width: 100%;
-  z-index: 2;
-  background: #fff; }
-  body #landing-page #map-stage {
+  width: 100%; }
+  body #landing-page {
     position: absolute;
-    left: 50%;
-    top: 0;
-    transform: translateX(-50%);
-    width: 1000px;
-    height: 500px; }
-  body #landing-page #us-map {
-    position: absolute;
-    left: 50%;
-    bottom: 0%;
-    transform: translate(-50%);
-    width: 800px;
-    height: auto; }
-  body #landing-page svg .state {
-    fill: #fff;
-    stroke: #000;
-    stroke-width: 1px;
-    stroke-opacity: 1;
-    stroke-linejoin: round;
-    stroke-dasharray: none;
-    cursor: pointer; }
-  body #landing-page svg .state-stage {
-    display: none; }
-  body #landing-page svg .state-stage#CA-stage {
-    display: block; }
-  body #landing-page svg .territory {
-    opacity: 0;
-    fill: #E0E0E0;
-    stroke: #646464;
-    stroke-width: 1;
-    stroke-opacity: 1; }
-  body #landing-page svg .territoryborder {
-    opacity: 0;
-    fill: none;
-    stroke: #A9A9A9;
-    stroke-width: 2; }
-  body #landing-page svg .border {
-    opacity: 0;
-    fill: none;
-    stroke: #A9A9A9;
-    stroke-width: 2; }
-  body #landing-page svg .circle {
-    opacity: 1;
-    fill: #E0E0E0;
-    stroke: #646464;
-    stroke-width: 1; }
-body #map {
-  position: absolute;
-  top: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%; }
+    height: 100%;
+    width: 100%;
+    z-index: 3;
+    background: #fff; }
+    body #landing-page #map-stage {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 500px; }
+    body #landing-page #us-map {
+      position: absolute;
+      left: 50%;
+      bottom: 0%;
+      transform: translate(-50%);
+      width: 800px;
+      height: auto; }
+    body #landing-page svg .state {
+      fill: #fff;
+      stroke: #000;
+      stroke-width: 1px;
+      stroke-opacity: 1;
+      stroke-linejoin: round;
+      stroke-dasharray: none;
+      cursor: pointer; }
+    body #landing-page svg .state-stage {
+      display: none; }
+    body #landing-page svg .state-stage#CA-stage {
+      display: block; }
+    body #landing-page svg .territory {
+      opacity: 0;
+      fill: #E0E0E0;
+      stroke: #646464;
+      stroke-width: 1;
+      stroke-opacity: 1; }
+    body #landing-page svg .territoryborder {
+      opacity: 0;
+      fill: none;
+      stroke: #A9A9A9;
+      stroke-width: 2; }
+    body #landing-page svg .border {
+      opacity: 0;
+      fill: none;
+      stroke: #A9A9A9;
+      stroke-width: 2; }
+    body #landing-page svg .circle {
+      opacity: 1;
+      fill: #E0E0E0;
+      stroke: #646464;
+      stroke-width: 1; }
+  body #map-container {
+    position: relative;
+    width: 100%;
+    height: 100%; }
+    body #map-container .pin-cta-container {
+      position: absolute;
+      height: 100px;
+      width: 100%;
+      background: green;
+      z-index: 2; }
+      body #map-container .pin-cta-container .pin-cta {
+        margin: 25px auto;
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        border: black;
+        border-width: .5px;
+        cursor: pointer;
+        background: red;
+        font-size: 12px;
+        text-align: center;
+        line-height: 1.5; }
+    body #map-container #map {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%; }
 
 /*# sourceMappingURL=style.css.map */

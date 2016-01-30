@@ -1,3 +1,8 @@
+<?php
+ error_reporting(E_ALL);
+
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -472,7 +477,7 @@
           l0.566-1.455l-0.97-1.778l-2.667-2.021l-1.051,0.161V351.768z M1522.539,360.416l1.777,3.152l1.213,1.94l-1.455,0.242l-1.293-1.212
           c0,0-0.728-1.455-0.728-1.859s0-2.183,0-2.183L1522.539,360.416L1522.539,360.416z"/>
         </g>
-      </svg>
+        </svg>
       </div>
       <div id="us-map"> 
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="759" height="300" viewBox="0 0 759 700">
@@ -589,8 +594,12 @@
         <path class="territoryborder" d="M 559.77592,593 L 559.77592,515.6691 L 682.01719,515.6691 L 682.01719,593 M 632.77323,515.6691 L 632.77323,593 M 559.77592,557.52646 L 682.01719,557.52646M 597.89432,556.61302 L 597.89432,593.73613"/>
       </div>
     </div>
-    <div id='map'></div>
-   
+    <div id="map-container">
+      <div class="pin-cta-container">
+        <div class="pin-cta">Add Pins!</div>
+      </div>
+      <div id='map'></div>
+    </div>
     </svg>
     <script type="text/javascript" src="assets/js/script.js"></script>
   </body>
