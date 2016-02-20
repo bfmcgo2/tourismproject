@@ -1,6 +1,8 @@
 // 50states.svg is located in the assets folder and contains the path of every
 // state layed on top of each other so morphSVG can smoothly function
 
+	
+
 $(document).ready(function(){
 	
 	// targets via Snap.svg the preexisting #state-stage-svg. 
@@ -35,7 +37,7 @@ $(document).ready(function(){
 			}
 		});
 		// .state is the class of all state paths in the lower SVG
-		console.log($(this).attr("id"));
+		// console.log($(this).attr("id"));
 		
 		
 		// .state-stage is the class of all state paths in the upper SVG
@@ -48,13 +50,18 @@ $(document).ready(function(){
 
 
 	mapboxgl.accessToken = 'pk.eyJ1IjoiYmZtY2dvMiIsImEiOiJlS0c1a1drIn0.GNJBFHhd6pqumZDjScZF7Q';
+	var mapBounds= [
+		[-107.07,40.32],
+		[-106.66,40.65]
+	];
 	var map = new mapboxgl.Map({
 		container: 'map', // container id
 		style: "mapbox://styles/bfmcgo2/cijp84irl001r8zkq9dakuq2g", //stylesheet location
-		center: [-97.39,39.01], // starting position
-		zoom: 3.5 // starting zoom
+		center: [-106.83,40.49], // starting position
+		zoom: 14, // starting zoom
+		maxBounds:mapBounds
 	});
-	console.log("make map");
+	// console.log("make map");
 
 	function State(name,stateId,latitude,longitude,swBound,neBound,zoom){
 		this.name = name;
@@ -69,7 +76,7 @@ $(document).ready(function(){
 		// removes the stage svg. The country svg serves as a guide to each state
 
 		$(".state#"+stateId).click(function(){
-			console.log(this);
+			// console.log(this);
 			var bounds =[swBound,neBound];
 
 			function fit(){
@@ -88,6 +95,8 @@ $(document).ready(function(){
 		});
 
 	}
+
+
 														// -80s long(left,right) left=decreasing
 														// 30s lat(up,down)     down=decreasing
 		//                          name       stateId   lat    long        swBound         neBound         zoom 
@@ -143,91 +152,242 @@ $(document).ready(function(){
 	var hawaii      = new State(    "Hawaii",       "HI",   20.62,  -157.45,[-161.09,17.97],[-153.90,22.87],    2);
 
 
-	map.on('style.load', function () {
+	map.on('style.load', function (data) {
+		// php file grabbing data from Sql
+		// console.log("hello");
+		$.getJSON("/assets/php/getMarkerData.php").done(handleMarkerData);
 		
-		var features = $.getJSON("/assets/php/getMarkers.php", function(){
-			console.log(features.responseJSON[0]);
-		});//[]; 
+		map.doubleClickZoom.disable();
+		// CONSTRUCTING THE GEOJSON FOR PINS
+		var coordinates = [];
+		var source;
+		var featuresArray=[];
+		var dataStructure;
+		var newMarker;
 		
-		// replace this with an ajax call to fetch markers already saved
-		features[0]={
-			"type":"Feature",
-			"geometry":{
-				"type":"Point",
-				"coordinates":[
-					-77.03238901390978,
-					38.913188059745586
-				]
-			}
-		};
 
-	
-		var data = {
-			"type": "FeatureCollection",
-			"features": features
-		};
+		// Grabbing sql data and putting into array
+		
 
-		map.on('dblclick', function(e) {
-			console.log(e.lngLat.lng, e.lngLat.lat);
-			var newMarker = {
-				"type":"Feature",
-				"geometry":{
+		function handleMarkerData(data){
+			console.log(data);
+			coordinates = data;
+			
+			updateMapMarkers();
+		}
+
+		
+
+		// constructing the GeoJSON structure with SQL data
+		function updateMapMarkers(){
+
+			coordinates.forEach(function(pin){
+				features = {"type":"Feature"},
+				features.geometry= {
 					"type":"Point",
-					"coordinates":[
-						e.lngLat.lng,
-						e.lngLat.lat
-					]
-				}
+					"coordinates": pin.coordinates
+				},
+				features.properties = {
+					"videoURL": pin.videoURL
+				};
+				featuresArray.push(features);
+			});
+		
+			dataStructure = {
+				"type": "FeatureCollection",
+				"features": featuresArray
 			};
 			
-			features.push(newMarker);
-			console.log(features);
-			source.setData(data);
+
+			source = new mapboxgl.GeoJSONSource({data: dataStructure});
+
+			map.addSource("markers", source);
+
+			map.addLayer({
+				"id":"markers",
+				"interactive":true,
+				"type":"circle",
+				"source":"markers",
+				"layout":{},
+				"paint":{
+					"circle-color":"#454545",
+					"circle-radius":15
+				}
+			});
+			userAddPinsToMap();
+			console.log(coordinates);
+		}
+
+		// END GEOJSON CONSTRUCTION
+
+
+
+		function userAddPinsToMap (){
 			
-			// send new coordinate off to the server with ajax
+			$(".add-pin-cta").click(function(){
+				// $(".submit").attr('disabled',true);
+				$(".add-content-form").toggleClass("active-class");
+				if($(".add-content-form").hasClass("active-class")){
+					$(".add-content-form").animate({
+						"width":"306px"
+
+					},300, function(){
+						$("#latLngCoord").fadeIn(300);
+						$(".add-content-form").removeClass("pin-added");
+						// map.on("click", mapClickHandler);
+
+
+					});
+					map.on("click",function(e){
+						$(".lng").val(e.lngLat.lng);
+						$(".lat").val(e.lngLat.lat);
+					});
+				}else{
+					$("#latLngCoord").fadeOut(300,function(){
+						$(".add-content-form").animate({
+							"width":"0px"
+						},
+						300, "easeInOutBack");
+						$(".add-content-form").addClass("pin-added");
+						// map.off("click",mapClickHandler);
+					});
+				}
+				// ***************
+				// HALP HALP HALP HALP
+				// ***************
+				$(".form-element").keyup(function(){
+					if($('.form-element').val("") && $('.checkbox').prop('checked', false)){
+					}else{
+						$('.checkbox').prop('checked', true)
+						console.log("go for it!");
+						$('.submit').prop('disabled',false);
+					}
+				});
+			});
+
+		}
+
+		// function handleVideoID(data){
+		// 	var youtubeURL= "https://www.youtube.com/watch?v=4Skoun_wXno";
+		// 	$.each(data, function(i){
+		// 		var vimeoMatch = data[i].videoID.match(/vimeo.com\/(.+)/);
+		// 		var youtubeMatch = data[i].videoID.match(/v=(.+)/);
+		// 		if (vimeoMatch) {
+		// 			console.log(vimeoMatch[1]);
+		// 			data[i].videoID = vimeoMatch[1];
+		// 		}else if(youtubeMatch){
+		// 			console.log(youtubeMatch[1]);
+		// 			data[i].videoID = youtubeMatch[1];
+		// 		}
+				
+		// 		vidID.push(data[i].videoID);
+		// 		console.log(vidID);
+		// 	});
+		// 	console.log(vidID[0]);
+		// }
+		
+
+
+
+		map.on("click", function(e){
+			$(".pic-container a").remove().css({"display":"none"});
+			$(".video-container").remove();
+			$("iframe").remove();
+
+			map.featuresAt(e.point, {layer: 'markers', radius: 30, includeGeometry: true}, function (err, features) {
 			
+				if (err) throw err;
+
+				if (features.length) {
+					// clicked an existing pin, show instagram/video/etc
+					
+					var videoURL = features[0].properties.videoURL;
+					var vimeoID = videoURL.match(/vimeo.com\/(.+)/);
+					var youtubeID= videoURL.match(/v=(.+)/);
+
+					var videoContainer = document.createElement("div");
+					videoContainer.setAttribute("class","video-container");
+					document.querySelector("#map-container").appendChild(videoContainer);
+
+					var createVideo = document.createElement("iframe");
+					createVideo.setAttribute("class", "video-preview");
+					if (vimeoID) {
+						console.log(vimeoID[1]);
+						createVideo.setAttribute("src","https://player.vimeo.com/video/"+vimeoID[1]+"?autoplay=0&loop=1&title=0&byline=0&portrait=0");
+					}else if(youtubeID){
+						console.log(youtubeID[1]);
+						createVideo.setAttribute("src","http://www.youtube.com/embed/"+youtubeID[1]+"?autoplay=0");
+					}
+					// createVideo.setAttribute("height", "300px");
+					// createVideo.setAttribute("width", "45%");
+					// createVideo.setAttribute("frameborder", "0");
+					// createVideo.setAttribute("zIndex","1");
+					console.log(videoContainer);
+					console.log(createVideo);
+					videoContainer.appendChild(createVideo);
+
+
+					// Get coordinates from the symbol and center the map on those coordinates
+					map.flyTo({center: features[0].geometry.coordinates});
+
+					console.log(features[0].properties.videoURL);
+					
+					var instagramLocationAPIURL = "https://api.instagram.com/v1/media/search?lat="+e.lngLat.lat+"&lng="+e.lngLat.lng+"&access_token=2178978543.76c0077.c6b582cd7f444dd3b439414c5a9c8949&callback=?";
+								//"https://api.instagram.com/v1/locations/"+location+"/media/recent?access_token=2178978543.76c0077.c6b582cd7f444dd3b439414c5a9c8949&callback=?"
+					$.getJSON(instagramLocationAPIURL).done(function( response ){
+
+						console.log(response);
+						for (var i = 0; i < 15; i++) {
+							console.log(response.data[i].images);
+							$(".pic-container").append("<a target='_blank' href='" + response.data[i].link +
+							"'><img src='" + response.data[i].images.thumbnail.url +"'></img></a>").fadeIn(200);
+							$(".pic-container a").css({
+								"display":"none",
+							}).delay(1000).fadeIn(400);
+							
+
+						}
+					});
+					var newInstagramAPI = "https://api.instagram.com/v1/locations/search?lat="+ e.lngLat.lat +"1&lng="+ e.lngLat.lng +"2&access_token=2178978543.76c0077.c6b582cd7f444dd3b439414c5a9c8949&callback=?";
+					$.getJSON(newInstagramAPI).done(function( response ){
+
+						console.log(response);
+					});
+
+
+				} else if($(".add-content-form").hasClass("active-class")){
+					// user clicked part of map with no pins, add a pin
+
+					if ($(".add-content-form").hasClass("pin-added")) {
+						// dont let them add another pin
+					}else {
+						$(".add-content-form").addClass("pin-added");
+						console.log("add regular pin");
+						// var data = $("#latLngCoord").serializeArray();
+						// $.post($("#latLngCoord").attr("action"), data);
+						newMarker = {
+							"type":"Feature",
+							"geometry":{
+								"type":"Point",
+								"coordinates":[
+									e.lngLat.lng,
+									e.lngLat.lat
+								]
+							}
+						};
+						featuresArray.push(newMarker);
+						source.setData(dataStructure);
+					}
+				}
+			});
 		});
 
-		var source = new mapboxgl.GeoJSONSource({data: data});
 
-		map.addSource("markers", source);
-
-		map.addLayer({
-			"id":"markers",
-			"interactive":true,
-			"type":"circle",
-			"source":"markers",
-			"layout":{},
-			"paint":{
-				"circle-color":"#454545",
-				"circle-radius":15
-			}
-		});
-
-
-
-	
 	});
 
 
-	map.on('click', function (e) {
 
-		// Use featuresAt to get features within a given radius of the click event
-		// Use layer option to avoid getting results from other layers
-		map.featuresAt(e.point, {layer: 'markers', radius: 10, includeGeometry: true}, function (err, features) {
-			if (err) throw err;
-			// if there are features within the given radius of the click event,
-			// fly to the location of the click event
-			if (features.length) {
-				// Get coordinates from the symbol and center the map on those coordinates
-				map.flyTo({center: features[0].geometry.coordinates});
-			}
-		});
-	});
-
-	
-
-
+	//
 	// Use the same approach as above to indicate that the symbols are clickable
 	// by changing the cursor style to 'pointer'.
 	map.on('mousemove', function (e) {
@@ -235,13 +395,10 @@ $(document).ready(function(){
 			if (err) throw err;
 			map.getCanvas().style.cursor = features.length ? 'pointer' : '';
 		});
-
-		// e.point is the x, y coordinates of the mousemove event relative
-		// to the top-left corner of the map
-		//console.log(JSON.stringify(e.point));
-		// e.lngLat is the longitude, latitude geographical position of the event
-		//console.log(JSON.stringify(e.lngLat));
 	});
+	
+
+
 });
 
 // shuffling the drawSVG of all the states
