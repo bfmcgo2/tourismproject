@@ -188,7 +188,9 @@ $(document).ready(function(){
 					"coordinates": pin.coordinates
 				},
 				features.properties = {
-					"videoURL": pin.videoURL
+					"videoURL": pin.videoURL,
+					"title":"balloon",
+					"marker-symbol":"../img/button.png"
 				};
 				featuresArray.push(features);
 			});
@@ -198,7 +200,7 @@ $(document).ready(function(){
 				"features": featuresArray
 			};
 			
-
+			console.log(featuresArray);
 			source = new mapboxgl.GeoJSONSource({data: dataStructure});
 
 			map.addSource("markers", source);
@@ -241,7 +243,9 @@ $(document).ready(function(){
 					map.on("click",function(e){
 						$(".lng").val(e.lngLat.lng);
 						$(".lat").val(e.lngLat.lat);
+						;
 					});
+
 				}else{
 					$("#latLngCoord").fadeOut(300,function(){
 						$(".add-content-form").animate({
@@ -300,38 +304,6 @@ $(document).ready(function(){
 
 				if (features.length) {
 					// clicked an existing pin, show instagram/video/etc
-					
-					var videoURL = features[0].properties.videoURL;
-					var vimeoID = videoURL.match(/vimeo.com\/(.+)/);
-					var youtubeID= videoURL.match(/v=(.+)/);
-
-					var videoContainer = document.createElement("div");
-					videoContainer.setAttribute("class","video-container");
-					document.querySelector("#map-container").appendChild(videoContainer);
-
-					var createVideo = document.createElement("iframe");
-					createVideo.setAttribute("class", "video-preview");
-					if (vimeoID) {
-						console.log(vimeoID[1]);
-						createVideo.setAttribute("src","https://player.vimeo.com/video/"+vimeoID[1]+"?autoplay=0&loop=1&title=0&byline=0&portrait=0");
-					}else if(youtubeID){
-						console.log(youtubeID[1]);
-						createVideo.setAttribute("src","http://www.youtube.com/embed/"+youtubeID[1]+"?autoplay=0");
-					}
-					// createVideo.setAttribute("height", "300px");
-					// createVideo.setAttribute("width", "45%");
-					// createVideo.setAttribute("frameborder", "0");
-					// createVideo.setAttribute("zIndex","1");
-					console.log(videoContainer);
-					console.log(createVideo);
-					videoContainer.appendChild(createVideo);
-
-
-					// Get coordinates from the symbol and center the map on those coordinates
-					map.flyTo({center: features[0].geometry.coordinates});
-
-					console.log(features[0].properties.videoURL);
-					
 					var instagramLocationAPIURL = "https://api.instagram.com/v1/media/search?lat="+e.lngLat.lat+"&lng="+e.lngLat.lng+"&access_token=2178978543.76c0077.c6b582cd7f444dd3b439414c5a9c8949&callback=?";
 								//"https://api.instagram.com/v1/locations/"+location+"/media/recent?access_token=2178978543.76c0077.c6b582cd7f444dd3b439414c5a9c8949&callback=?"
 					$.getJSON(instagramLocationAPIURL).done(function( response ){
@@ -353,13 +325,57 @@ $(document).ready(function(){
 
 						console.log(response);
 					});
+					
+					var videoURL = features[0].properties.videoURL;
+					var vimeoID = videoURL.match(/vimeo.com\/(.+)/);
+					var youtubeID= videoURL.match(/v=(.+)/);
+
+					var videoContainer = document.createElement("div");
+					videoContainer.setAttribute("class","video-container");
+					document.querySelector("#map-container").appendChild(videoContainer);
+
+					var createVideo = document.createElement("iframe");
+					createVideo.setAttribute("class", "video-preview");
+					if (vimeoID) {
+						console.log(vimeoID[1]);
+						createVideo.setAttribute("src","https://player.vimeo.com/video/"+vimeoID[1]+"?autoplay=0&loop=1&title=0&byline=0&portrait=0");
+					}else if(youtubeID){
+						console.log(youtubeID[1]);
+						createVideo.setAttribute("src","http://www.youtube.com/embed/"+youtubeID[1]+"?autoplay=0");
+					}
+					console.log(videoContainer);
+					console.log(createVideo);
+					videoContainer.appendChild(createVideo);
+
+
+					// Get coordinates from the symbol and center the map on those coordinates
+					map.flyTo({center: features[0].geometry.coordinates});
+
+					console.log(features[0].properties.videoURL);
+					
+					
 
 
 				} else if($(".add-content-form").hasClass("active-class")){
 					// user clicked part of map with no pins, add a pin
 
+
 					if ($(".add-content-form").hasClass("pin-added")) {
 						// dont let them add another pin
+						featuresArray.pop(newMarker);
+						newMarker = {
+							"type":"Feature",
+							"geometry":{
+								"type":"Point",
+								"coordinates":[
+									e.lngLat.lng,
+									e.lngLat.lat
+								]
+							}
+						};
+						featuresArray.push(newMarker);
+						source.setData(dataStructure);
+
 					}else {
 						$(".add-content-form").addClass("pin-added");
 						console.log("add regular pin");

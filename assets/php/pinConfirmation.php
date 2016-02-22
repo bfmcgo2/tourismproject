@@ -14,6 +14,18 @@
 			.pending-acceptance p{
 				margin:2px;
 			}
+			.remove-pin-cta{
+				position:absolute;
+				right:100px;
+				top:0;
+				width:100px;
+				height:100%;
+				background:red;
+				text-align: center;
+				line-height: 5;
+				color:white;
+				cursor:pointer;
+			}
 			.acceptance-cta{
 				position:absolute;
 				right:0;
@@ -50,6 +62,7 @@
 						"<p>".$lat."</p>".
 						"<a href=".$videoID.">".$videoID."</a>".
 						"<p class='activation'>".$activation."</p>".
+						"<a href='removePin.php?id=$id' class='remove-pin-cta'>Delete Pin</a>".
 						"<a href='updateConfirmation.php?id=$id&activation=yes' class='acceptance-cta'>Submit</a>".
 
 						"</div>";

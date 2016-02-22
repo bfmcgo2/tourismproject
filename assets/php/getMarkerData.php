@@ -9,7 +9,6 @@ $records = mysqli_query($con,$sql);
 $marker_content = array();
 
 
-echo $sql;
 	while($row = mysqli_fetch_assoc($records)){
 		// $marker_content = $row;
 		if($row["activation"]==="yes"){;
