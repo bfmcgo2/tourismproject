@@ -3,7 +3,7 @@
 	include("connectDatabase.php");
 
 
-	$sql="SELECT id, activation FROM coordinates WHERE activation = 'no'";
+	$sql="SELECT id, activation FROM coordinates WHERE activation = 'yes'";
 	$records = mysqli_query($con, $sql);
 
 	while($row = mysqli_fetch_assoc($records)){
@@ -16,6 +16,8 @@
 	$instaID = $_POST['instaID'];
 	$location = $_POST['location'];
 
+	
+
 
 
 
@@ -24,4 +26,3 @@
 		header("Location:http://localhost:8888/assets/php/pinConfirmation.php");
 	else
 		echo "Update Failed";
-

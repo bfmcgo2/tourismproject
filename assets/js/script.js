@@ -63,6 +63,11 @@ $(document).ready(function(){
 	});
 	// console.log("make map");
 
+	var geocoder= new mapboxgl.Geocoder();
+	
+	map.addControl(geocoder);
+	console.log(geocoder.options);
+
 	function State(name,stateId,latitude,longitude,swBound,neBound,zoom){
 		this.name = name;
 		this.stateId=stateId;
@@ -182,15 +187,17 @@ $(document).ready(function(){
 		function updateMapMarkers(){
 
 			coordinates.forEach(function(pin){
+				console.log(pin);
 				features = {"type":"Feature"},
 				features.geometry= {
 					"type":"Point",
 					"coordinates": pin.coordinates
 				},
 				features.properties = {
+					"instagramID":pin.instaID,
 					"videoURL": pin.videoURL,
 					"title":"balloon",
-					"marker-symbol":"../img/button.png"
+					"marker-symbol": "balloonsmallest"
 				};
 				featuresArray.push(features);
 			});
@@ -208,13 +215,15 @@ $(document).ready(function(){
 			map.addLayer({
 				"id":"markers",
 				"interactive":true,
-				"type":"circle",
+				"type":"symbol",
 				"source":"markers",
-				"layout":{},
+				"layout":{
+					"icon-image": "{marker-symbol}",
+				},
 				"paint":{
-					"circle-color":"#454545",
-					"circle-radius":15
+					
 				}
+
 			});
 			userAddPinsToMap();
 			console.log(coordinates);
@@ -271,24 +280,7 @@ $(document).ready(function(){
 
 		}
 
-		// function handleVideoID(data){
-		// 	var youtubeURL= "https://www.youtube.com/watch?v=4Skoun_wXno";
-		// 	$.each(data, function(i){
-		// 		var vimeoMatch = data[i].videoID.match(/vimeo.com\/(.+)/);
-		// 		var youtubeMatch = data[i].videoID.match(/v=(.+)/);
-		// 		if (vimeoMatch) {
-		// 			console.log(vimeoMatch[1]);
-		// 			data[i].videoID = vimeoMatch[1];
-		// 		}else if(youtubeMatch){
-		// 			console.log(youtubeMatch[1]);
-		// 			data[i].videoID = youtubeMatch[1];
-		// 		}
-				
-		// 		vidID.push(data[i].videoID);
-		// 		console.log(vidID);
-		// 	});
-		// 	console.log(vidID[0]);
-		// }
+
 		
 
 
@@ -298,32 +290,29 @@ $(document).ready(function(){
 			$(".video-container").remove();
 			$("iframe").remove();
 
-			map.featuresAt(e.point, {layer: 'markers', radius: 30, includeGeometry: true}, function (err, features) {
+			map.featuresAt(e.point, {layer: 'markers', radius: 40, includeGeometry: true}, function (err, features) {
 			
 				if (err) throw err;
 
 				if (features.length) {
 					// clicked an existing pin, show instagram/video/etc
-					var instagramLocationAPIURL = "https://api.instagram.com/v1/media/search?lat="+e.lngLat.lat+"&lng="+e.lngLat.lng+"&access_token=2178978543.76c0077.c6b582cd7f444dd3b439414c5a9c8949&callback=?";
+					var instaID= features[0].properties.instagramID;
+					console.log(features[0]);
+					var instagramLocationAPIURL = "https://api.instagram.com/v1/locations/"+instaID+"/media/recent?access_token=2178978543.76c0077.c6b582cd7f444dd3b439414c5a9c8949&count=20&callback=?";
 								//"https://api.instagram.com/v1/locations/"+location+"/media/recent?access_token=2178978543.76c0077.c6b582cd7f444dd3b439414c5a9c8949&callback=?"
 					$.getJSON(instagramLocationAPIURL).done(function( response ){
 
 						console.log(response);
-						for (var i = 0; i < 15; i++) {
-							console.log(response.data[i].images);
+						for (var i = 0; i < 20; i++) {
+							console.log(response);
 							$(".pic-container").append("<a target='_blank' href='" + response.data[i].link +
 							"'><img src='" + response.data[i].images.thumbnail.url +"'></img></a>").fadeIn(200);
 							$(".pic-container a").css({
 								"display":"none",
-							}).delay(1000).fadeIn(400);
+							}).delay(200).fadeIn(400);
 							
 
 						}
-					});
-					var newInstagramAPI = "https://api.instagram.com/v1/locations/search?lat="+ e.lngLat.lat +"1&lng="+ e.lngLat.lng +"2&access_token=2178978543.76c0077.c6b582cd7f444dd3b439414c5a9c8949&callback=?";
-					$.getJSON(newInstagramAPI).done(function( response ){
-
-						console.log(response);
 					});
 					
 					var videoURL = features[0].properties.videoURL;
@@ -334,10 +323,17 @@ $(document).ready(function(){
 					videoContainer.setAttribute("class","video-container");
 					document.querySelector("#map-container").appendChild(videoContainer);
 
+					$(".video-container").click(function(){
+						console.log("click");
+						$(this).fadeOut(300);
+						$("iframe").remove();
+						$(".pic-container a").remove().css({"display":"none"});
+					});
+
 					var createVideo = document.createElement("iframe");
 					createVideo.setAttribute("class", "video-preview");
 					if (vimeoID) {
-						console.log(vimeoID[1]);
+						// console.log(vimeoID[1]);
 						createVideo.setAttribute("src","https://player.vimeo.com/video/"+vimeoID[1]+"?autoplay=0&loop=1&title=0&byline=0&portrait=0");
 					}else if(youtubeID){
 						console.log(youtubeID[1]);
@@ -371,6 +367,9 @@ $(document).ready(function(){
 									e.lngLat.lng,
 									e.lngLat.lat
 								]
+							},
+							"properties":{
+								"marker-symbol":"balloonsmallest"
 							}
 						};
 						featuresArray.push(newMarker);
@@ -389,6 +388,9 @@ $(document).ready(function(){
 									e.lngLat.lng,
 									e.lngLat.lat
 								]
+							},
+							"properties":{
+								"marker-symbol":"balloonsmallest"
 							}
 						};
 						featuresArray.push(newMarker);
@@ -400,7 +402,6 @@ $(document).ready(function(){
 
 
 	});
-
 
 
 	//
@@ -416,6 +417,8 @@ $(document).ready(function(){
 
 
 });
+
+
 
 // shuffling the drawSVG of all the states
 function shuffle(array) {

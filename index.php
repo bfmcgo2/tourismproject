@@ -20,6 +20,8 @@
 		<script type="text/javascript" src="assets/js/jquery.easing.js"></script>
 		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.4/mapbox-gl.js'></script>
 		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.4/mapbox-gl.css' rel='stylesheet' />
+		<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.1.0/mapbox-gl-geocoder.js'></script>
+		<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.1.0/mapbox-gl-geocoder.css' type='text/css' />
 
 		
 	</head>
@@ -595,6 +597,7 @@
 				<path class="territoryborder" d="M 559.77592,593 L 559.77592,515.6691 L 682.01719,515.6691 L 682.01719,593 M 632.77323,515.6691 L 632.77323,593 M 559.77592,557.52646 L 682.01719,557.52646M 597.89432,556.61302 L 597.89432,593.73613"/>
 			</div>
 		</div>
+		<div></div>
 		<div id="map-container">
 			<div class="add-content-form">
 				<form id="latLngCoord" class="clearfix" action="assets/php/addMarkersToDatabase.php" method="post">
@@ -613,10 +616,11 @@
 					<div class="form-element">
 						<p>camera:</p>
 						<select name="cameras">
+							<option>Select a Camera</option>
 							<option>GoPro Hero</option>
-							<option>Google Glass</option>
 							<option>Apple iPhone</option>
 						</select>
+						<input type="text" name="other_camera" value="Other Camera">
 					</div>
 				
 					<div class="form-element">
@@ -625,9 +629,9 @@
 					<div class="form-element">
 						<p>Submit:<input class="submit" type="submit" name="submit" ></p>
 					</div>
-					<div class="form-element">
+					<!-- <div class="form-element">
 						<input class="checkbox" type = "checkbox" name="appropriate" value="Yes"/>
-					</div>
+					</div> -->
 				</form>
 
 				<div class="add-pin-cta">
