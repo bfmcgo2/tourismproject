@@ -6,7 +6,42 @@
 body {
 	height:100%;
 	width:100%;
+	#atlanta-landing-page{
+		width:100%;
+		height:100%;
+		position:absolute;
+		z-index: 3;
+		background:rgba(115,203,242,.8);
+		.atl-logo{
+			width:500px;
+			height:20%;
+		    margin:150px auto 0px;
+		    .cursive{
+		    	// opacity:0;
+		    }
+		}
+		.enter-cta-container{
+			position:relative;
+			width:100%;
+			height:50%;
 
+			.enter-cta{
+				position:absolute;
+				left:50%;
+				top: 50%;
+				-ms-transform:translate(-50%,-50%);
+				-webkit-transform:translate(-50%,50%);
+				transform:translate(-50%,-50%);
+				width:120px;
+				background:white;
+				color:rgba(115,203,242,1);
+				text-align:center;
+				padding:14px;
+				border-radius:20px;
+				cursor: pointer;
+			}
+		}
+	}
 	#landing-page{
 		display:none;
 		position:absolute;
@@ -19,6 +54,8 @@ body {
 			position:absolute;
 			left:50%;
 			top:0;
+			-ms-transform:translateX(-50%);
+			-webkit-transform:translateX(-50%);
 			transform:translateX(-50%);
 			width:1000px;
 			height:500px;
@@ -28,6 +65,8 @@ body {
 		    position:absolute;
 		    left:50%;
 		    bottom:0%;
+		    -ms-transform:translate(-50%);
+		    -webkit-transform:translate(-50%);
 		    transform:translate(-50%);
 		    width:800px;
 		    height:auto;
@@ -92,78 +131,127 @@ body {
 		position:relative;
 		width:100%;
 		height:100%;
+		overflow:hidden;
+		.add-pin-cta{
+			position:absolute;
+			width:100px;
+			right:0;
+			top:0;
+			text-align: center;
+			background:rgba(190,94,0,.9);
+			border-radius:10px 0px 0 20px;
+			cursor:pointer;
+			z-index: 2;
+			h3{
+				font-family: futura;
+				color:wheat;
+			}
+		}
 		.add-content-form{
 			position:absolute;
-			height:100%;
 			width:0px;
-			left:0;
+			height:260px;
+			left:50%;
+			top:20%;
+			-ms-transform:translate(-50%,-50%);
+			-webkit-transform:translate(-50%,-50%);
+			transform:translate(-50%,-50%);
 			background:#f9ba5b;
 			z-index: 2;
-			box-shadow:inset 0px -6px 8px 0px #be5e00;
 			overflow:visible !important;
+			display: none;
+			border-radius:5px;
 			#latLngCoord{
-				display: none;
 				width:100%;
-				height:100%;
 				margin:0px auto;
 				font-family: futura;
 				color:#fffaec;
 				padding-top:20px;
-				.form-element{
-					float:left;
-					display:block;
-					margin:5px auto 20px;
+				.form-page{
+					position:absolute;
+					top:0;
+					left:0;
 					width:100%;
-					input{
-						padding: 2px 5px;
+					height:100%;
+					.form-element{
+						// opacity:0;
 						display:block;
-						width:185px;
-						border-radius:6px;
-						margin:0 auto 0px;
-						border-width:0;
-						font-family: futura;
-						color:grey;
-					}
-					select{
-						display:block;
-						margin:0px auto 0;
-						background:green;
-					}
-					.video{
-						width:290px;
-						margin:0 auto;
-					}
-					p{
 						width:100%;
-						text-align: center;
-						margin:0 auto;
-					}
-					.submit{
-						
-						// &:hover{
-						// 	background:green;
-						// 	color:white;
-						// }
+						margin: 20px auto;
+						input{
+							padding: 2px 5px;
+							display:block;
+							width:185px;
+							border-radius:6px;
+							margin:0 auto 0px;
+							border-width:0;
+							font-family: futura;
+							color:grey;
+						}
+						select{
+							display:block;
+							margin:0px auto 0;
+							background:green;
+						}
+						.video{
+							width:260px;
+							margin:0 auto;
+						}
+						p{
+							width:100%;
+							text-align: center;
+							margin:0 auto;
+						}
 					}
 				}
-				// .video-container{
-				// 	width:100%;
-				// }	
 			}
-			.add-pin-cta{
+			.next-button{
 				position:absolute;
-				width:290px;
-				right:-175px;
-				transform:rotate(-90deg);
-				top:50%;
+				bottom:30px;
+				right:25%;
+				-ms-transform:translateX(50%);
+				-webkit-transform:translateX(50%);
+				transform:translateX(50%);
+				background:rgba(190, 94, 0, 0.9);
 				text-align: center;
-				background:rgba(190,94,0,.9);
-				border-radius:0px 0px 20px 20px;
+				padding:10px 20px;
+				border-radius:5px;
 				cursor:pointer;
-				h3{
-					font-family: futura;
-					color:wheat;
-				}
+			}
+			.next-button.middle{
+				right:50%;
+			}
+			.previous-button.middle{
+				left:50%;
+			}
+			.previous-button{
+				position:absolute;
+				bottom:30px;
+				left:25%;
+				-ms-transform:translateX(-50%);
+				-webkit-transform:translateX(-50%);
+				transform:translateX(-50%);
+				background:rgba(190, 94, 0, 0.9);
+				text-align: center;
+				padding:10px 15px;
+				border-radius:5px;
+				cursor:pointer;
+			}
+
+			.exit-form{
+				position:absolute;
+				background:white;
+				color:rgba(190, 94, 0, 1);
+				font-size: 25px;
+				width:30px;
+				height:30px;
+				background:white;
+				border-radius:50%;
+				text-align: center;
+				line-height: 1;
+				right:-10px;
+				top:-10px;
+				cursor: pointer;
 			}
 
 		}
@@ -176,10 +264,21 @@ body {
 			width:100%;
 			height:100%;
 		}
+		#geocoder-container {
+			position:absolute;
+			top:0;
+			left:50%;
+			width:100%;
+			margin-top:20px;
+			z-index: 3;
+	      }
+		    
 		.video-container{
 			position:absolute;
 			left:50%;
 			top:50%;
+			-ms-transform:translate(-50%,-50%);
+			-webkit-transform:translate(-50%,-50%);
 			transform:translate(-50%,-50%);
 			width:100%;
 			height:100%;
@@ -189,6 +288,8 @@ body {
 				position:absolute;
 				top:50%;
 				left:50%;
+				-ms-transform:translate(-50%,-50%);
+				-webkit-transform:translate(-50%,-50%);
 				transform:translate(-50%,-50%);
 				width:550px;
 				height:400px;
@@ -213,6 +314,23 @@ body {
 					width:100%
 				}
 			}
+		}
+		.add-pin-instruct{
+			position:absolute;
+			bottom:-115px;
+			z-index: 2;
+			width:590px;
+			font-family: futura;
+			background:rgba(190, 94, 0, 0.9);
+			border-radius:10px 10px 0px 0px;
+			text-align: center;
+			font-size: 39px;
+			padding:17px 17px 45px;
+			color:beige;
+			left:50%;
+			-ms-transform: translate(-50%);
+		   	-webkit-transform:translate(-50%);
+			transform:translate(-50%);
 		}
 	}
 }

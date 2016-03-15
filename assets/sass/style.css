@@ -30,10 +30,42 @@ html {
   float: left;
   margin-left: 0; }
 
+#map div.mapboxgl-ctrl-top-right {
+  top: 90%;
+  transform: translateY(-50%); }
+
 /* primary CTA ribbon */
 body {
   height: 100%;
   width: 100%; }
+  body #atlanta-landing-page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 3;
+    background: rgba(115, 203, 242, 0.8); }
+    body #atlanta-landing-page .atl-logo {
+      width: 500px;
+      height: 20%;
+      margin: 150px auto 0px; }
+    body #atlanta-landing-page .enter-cta-container {
+      position: relative;
+      width: 100%;
+      height: 50%; }
+      body #atlanta-landing-page .enter-cta-container .enter-cta {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -ms-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, 50%);
+        transform: translate(-50%, -50%);
+        width: 120px;
+        background: white;
+        color: #73cbf2;
+        text-align: center;
+        padding: 14px;
+        border-radius: 20px;
+        cursor: pointer; }
   body #landing-page {
     display: none;
     position: absolute;
@@ -45,6 +77,8 @@ body {
       position: absolute;
       left: 50%;
       top: 0;
+      -ms-transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
       transform: translateX(-50%);
       width: 1000px;
       height: 500px; }
@@ -52,6 +86,8 @@ body {
       position: absolute;
       left: 50%;
       bottom: 0%;
+      -ms-transform: translate(-50%);
+      -webkit-transform: translate(-50%);
       transform: translate(-50%);
       width: 800px;
       height: auto; }
@@ -91,62 +127,113 @@ body {
   body #map-container {
     position: relative;
     width: 100%;
-    height: 100%; }
+    height: 100%;
+    overflow: hidden; }
+    body #map-container .add-pin-cta {
+      position: absolute;
+      width: 100px;
+      right: 0;
+      top: 0;
+      text-align: center;
+      background: rgba(190, 94, 0, 0.9);
+      border-radius: 10px 0px 0 20px;
+      cursor: pointer;
+      z-index: 2; }
+      body #map-container .add-pin-cta h3 {
+        font-family: futura;
+        color: wheat; }
     body #map-container .add-content-form {
       position: absolute;
-      height: 100%;
       width: 0px;
-      left: 0;
+      height: 260px;
+      left: 50%;
+      top: 20%;
+      -ms-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
       background: #f9ba5b;
       z-index: 2;
-      box-shadow: inset 0px -6px 8px 0px #be5e00;
-      overflow: visible !important; }
+      overflow: visible !important;
+      display: none;
+      border-radius: 5px; }
       body #map-container .add-content-form #latLngCoord {
-        display: none;
         width: 100%;
-        height: 100%;
         margin: 0px auto;
         font-family: futura;
         color: #fffaec;
         padding-top: 20px; }
-        body #map-container .add-content-form #latLngCoord .form-element {
-          float: left;
-          display: block;
-          margin: 5px auto 20px;
-          width: 100%; }
-          body #map-container .add-content-form #latLngCoord .form-element input {
-            padding: 2px 5px;
+        body #map-container .add-content-form #latLngCoord .form-page {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%; }
+          body #map-container .add-content-form #latLngCoord .form-page .form-element {
             display: block;
-            width: 185px;
-            border-radius: 6px;
-            margin: 0 auto 0px;
-            border-width: 0;
-            font-family: futura;
-            color: grey; }
-          body #map-container .add-content-form #latLngCoord .form-element select {
-            display: block;
-            margin: 0px auto 0;
-            background: green; }
-          body #map-container .add-content-form #latLngCoord .form-element .video {
-            width: 290px;
-            margin: 0 auto; }
-          body #map-container .add-content-form #latLngCoord .form-element p {
             width: 100%;
-            text-align: center;
-            margin: 0 auto; }
-      body #map-container .add-content-form .add-pin-cta {
+            margin: 20px auto; }
+            body #map-container .add-content-form #latLngCoord .form-page .form-element input {
+              padding: 2px 5px;
+              display: block;
+              width: 185px;
+              border-radius: 6px;
+              margin: 0 auto 0px;
+              border-width: 0;
+              font-family: futura;
+              color: grey; }
+            body #map-container .add-content-form #latLngCoord .form-page .form-element select {
+              display: block;
+              margin: 0px auto 0;
+              background: green; }
+            body #map-container .add-content-form #latLngCoord .form-page .form-element .video {
+              width: 260px;
+              margin: 0 auto; }
+            body #map-container .add-content-form #latLngCoord .form-page .form-element p {
+              width: 100%;
+              text-align: center;
+              margin: 0 auto; }
+      body #map-container .add-content-form .next-button {
         position: absolute;
-        width: 290px;
-        right: -175px;
-        transform: rotate(-90deg);
-        top: 50%;
-        text-align: center;
+        bottom: 30px;
+        right: 25%;
+        -ms-transform: translateX(50%);
+        -webkit-transform: translateX(50%);
+        transform: translateX(50%);
         background: rgba(190, 94, 0, 0.9);
-        border-radius: 0px 0px 20px 20px;
+        text-align: center;
+        padding: 10px 20px;
+        border-radius: 5px;
         cursor: pointer; }
-        body #map-container .add-content-form .add-pin-cta h3 {
-          font-family: futura;
-          color: wheat; }
+      body #map-container .add-content-form .next-button.middle {
+        right: 50%; }
+      body #map-container .add-content-form .previous-button.middle {
+        left: 50%; }
+      body #map-container .add-content-form .previous-button {
+        position: absolute;
+        bottom: 30px;
+        left: 25%;
+        -ms-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        background: rgba(190, 94, 0, 0.9);
+        text-align: center;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer; }
+      body #map-container .add-content-form .exit-form {
+        position: absolute;
+        background: white;
+        color: #be5e00;
+        font-size: 25px;
+        width: 30px;
+        height: 30px;
+        background: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 1;
+        right: -10px;
+        top: -10px;
+        cursor: pointer; }
     body #map-container #map {
       position: absolute;
       top: 0;
@@ -154,10 +241,19 @@ body {
       z-index: 1;
       width: 100%;
       height: 100%; }
+    body #map-container #geocoder-container {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 100%;
+      margin-top: 20px;
+      z-index: 3; }
     body #map-container .video-container {
       position: absolute;
       left: 50%;
       top: 50%;
+      -ms-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
       width: 100%;
       height: 100%;
@@ -167,6 +263,8 @@ body {
         position: absolute;
         top: 50%;
         left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
         width: 550px;
         height: 400px;
@@ -185,5 +283,21 @@ body {
         width: 100%; }
         body #map-container .pic-container a img {
           width: 100%; }
+    body #map-container .add-pin-instruct {
+      position: absolute;
+      bottom: -115px;
+      z-index: 2;
+      width: 590px;
+      font-family: futura;
+      background: rgba(190, 94, 0, 0.9);
+      border-radius: 10px 10px 0px 0px;
+      text-align: center;
+      font-size: 39px;
+      padding: 17px 17px 45px;
+      color: beige;
+      left: 50%;
+      -ms-transform: translate(-50%);
+      -webkit-transform: translate(-50%);
+      transform: translate(-50%); }
 
 /*# sourceMappingURL=style.css.map */
