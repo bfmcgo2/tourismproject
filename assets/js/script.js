@@ -6,39 +6,46 @@
 $(document).ready(function(){
 	
 	
-	$(".enter-cta").click(function(){
-		$("#atlanta-landing-page").fadeOut(300);
-
+	$(".landing-map-cta").click(function(){
+		$(".landing-page-container").fadeOut(300);
+		
 	})
 	// --------------------------Mapbox JS Map-----------------
 
 
 	mapboxgl.accessToken = 'pk.eyJ1IjoiYmZtY2dvMiIsImEiOiJlS0c1a1drIn0.GNJBFHhd6pqumZDjScZF7Q';
 	var mapBounds= [
-		[-84.55,33.70],
-		[-84.25,33.87]
+		[-107.72,40.27],
+		[-106.61,40.80]
 	];
 	var map = new mapboxgl.Map({
 		container: 'map', // container id
 		style: "mapbox://styles/bfmcgo2/cijp84irl001r8zkq9dakuq2g", //stylesheet location
-		center: [-84.39,33.76], // starting position
-		zoom: 13, // starting zoom
+		center: [-106.84, 40.44], // starting position
+		zoom: 12, // starting zoom
 		maxBounds:mapBounds
 	});
 
+
 	var geocoder = new mapboxgl.Geocoder({
-	  container: 'geocoder-container',
-	  proximity:  [-84.25,33.87]
+	    container: 'geocoder-container', // Optional. Specify a unique container for the control to be added to.
 	});
 	map.addControl(geocoder);
-
-
+	console.log(geocoder);
+	
+	geocoder.on('result',function(){
+		console.log("result");
+	});
 	// --------------------------Mapbox JS Map-----------------
 	
 
 	map.on('style.load', function (data) {
 		// php file grabbing data from Sql
 		// console.log("hello");
+		geocoder.on('result',function(){
+			console.log("result");
+		})
+		
 		$.getJSON("/assets/php/getMarkerData.php").done(handleMarkerData);
 		
 		map.doubleClickZoom.disable();
@@ -72,9 +79,9 @@ $(document).ready(function(){
 			}, 3000, "easeOutElastic", function(){
 				$(this).animate({
 					"bottom":"-115px"
-				},3000, "easeInOutBack")
-			})
-		}
+				},3000, "easeInOutBack");
+			});
+		};
 
 
 		var hideForm = function() {
@@ -93,13 +100,13 @@ $(document).ready(function(){
 			console.log("form next page");
 			$(".form-element").trigger("form_page_change");
 			$formPages.filter(":visible").hide().next().show();
-		}
+		};
 
 		var prevFormPage = function(){
 			console.log("prev form page");
 			$(".form-element").trigger("form_page_change");
 			$formPages.filter(":visible").hide().prev().show();
-		}
+		};
 
 
 
@@ -107,7 +114,7 @@ $(document).ready(function(){
 		
 
 		function handleMarkerData(data){
-			console.log(data);
+			// console.log(data);
 			coordinates = data;
 			
 			updateMapMarkers();
@@ -119,7 +126,7 @@ $(document).ready(function(){
 		function updateMapMarkers(){
 
 			coordinates.forEach(function(pin){
-				console.log(pin);
+				// console.log(pin);
 				features = {"type":"Feature"},
 				features.geometry= {
 					"type":"Point",
@@ -139,7 +146,7 @@ $(document).ready(function(){
 				"features": featuresArray
 			};
 			
-			console.log(featuresArray);
+			// console.log(featuresArray);
 			source = new mapboxgl.GeoJSONSource({data: dataStructure});
 
 			map.addSource("markers", source);
@@ -158,7 +165,7 @@ $(document).ready(function(){
 
 			});
 			userAddPinsToMap();
-			console.log(coordinates);
+			// console.log(coordinates);
 		}
 
 		// END GEOJSON CONSTRUCTION
@@ -183,8 +190,8 @@ $(document).ready(function(){
 					if ($(".add-content-form").hasClass("pin-added")) {
 						// remove newMarker from map
 						featuresArray.pop();
-						source.setData(dataStructure);	
-						$(".add-content-form").removeClass("pin-added")
+						source.setData(dataStructure);
+						$(".add-content-form").removeClass("pin-added");
 					}
 				}
 				
@@ -212,8 +219,8 @@ $(document).ready(function(){
 				if ($(".add-content-form").hasClass("pin-added")) {
 					// remove newMarker from map
 					featuresArray.pop();
-					source.setData(dataStructure);	
-					$(".add-content-form").removeClass("pin-added")
+					source.setData(dataStructure);
+					$(".add-content-form").removeClass("pin-added");
 				}
 
 			});
@@ -228,7 +235,7 @@ $(document).ready(function(){
 
 
 
-				$.post(formUrl, post, function() { 
+				$.post(formUrl, post, function() {
 					
 					hideForm();
 					$(".add-content-form input[name='lat']").val("");
@@ -238,12 +245,9 @@ $(document).ready(function(){
 					$(".add-content-form").removeClass("pin-added");
 					$(".add-content-form").removeClass("active-class");
 				});
-			})
+			});
 
 		}
-
-
-		
 
 		$(".next-button").click(nextFormPage);
 		$(".previous-button").click(prevFormPage);
@@ -259,7 +263,7 @@ $(document).ready(function(){
 			});
 		})
 
-
+		
 		map.on("click", function(e){
 
 			if ($(".add-content-form").hasClass("active-class")) {
@@ -279,9 +283,6 @@ $(document).ready(function(){
 				if (err) throw err;
 
 				if (features.length) {
-
-					
-
 					$("#map-container").append("<div class=pic-container></div>");
 					$(".pic-container").fadeIn(200);
 					// clicked an existing pin, show instagram/video/etc
@@ -339,14 +340,9 @@ $(document).ready(function(){
 					});
 
 					console.log(features[0].properties.videoURL);
-					
-					
-
 
 				} else if($(".add-content-form").hasClass("active-class")){
 					// user clicked part of map with no pins, add a pin
-
-
 					if ($(".add-content-form").hasClass("pin-added")) {
 						// dont let them add another pin
 						featuresArray.pop();
@@ -388,11 +384,7 @@ $(document).ready(function(){
 				}
 			});
 		});
-
-
 	});
-
-
 	//
 	// Use the same approach as above to indicate that the symbols are clickable
 	// by changing the cursor style to 'pointer'.
@@ -402,29 +394,4 @@ $(document).ready(function(){
 			map.getCanvas().style.cursor = features.length ? 'pointer' : '';
 		});
 	});
-	
-
-
 });
-
-
-
-// shuffling the drawSVG of all the states
-// function shuffle(array) {
-//   var currentIndex = array.length, temporaryValue, randomIndex;
-
-//   // While there remain elements to shuffle...
-//   while (0 !== currentIndex) {
-
-// 	// Pick a remaining element...
-// 	randomIndex = Math.floor(Math.random() * currentIndex);
-// 	currentIndex -= 1;
-
-// 	// And swap it with the current element.
-// 	temporaryValue = array[currentIndex];
-// 	array[currentIndex] = array[randomIndex];
-// 	array[randomIndex] = temporaryValue;
-//   }
-
-//   return array;
-// }

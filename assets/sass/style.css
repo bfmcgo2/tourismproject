@@ -37,93 +37,126 @@ html {
 /* primary CTA ribbon */
 body {
   height: 100%;
-  width: 100%; }
-  body #atlanta-landing-page {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  font-family: 'Montserrat', sans-serif; }
+  body .landing-page-container {
     position: absolute;
-    z-index: 3;
-    background: rgba(115, 203, 242, 0.8); }
-    body #atlanta-landing-page .atl-logo {
-      width: 500px;
-      height: 20%;
-      margin: 150px auto 0px; }
-    body #atlanta-landing-page .enter-cta-container {
-      position: relative;
+    width: 100%;
+    height: 200%;
+    top: 0; }
+    body .landing-page-container #steamboat-landing-page {
       width: 100%;
-      height: 50%; }
-      body #atlanta-landing-page .enter-cta-container .enter-cta {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        -ms-transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, 50%);
-        transform: translate(-50%, -50%);
-        width: 120px;
-        background: white;
-        color: #73cbf2;
+      height: 50%;
+      position: absolute;
+      z-index: 3;
+      background-image: linear-gradient(to bottom, rgba(71, 102, 176, 0.9), rgba(71, 102, 176, 0.9)), url(../img/gondola.jpg);
+      background-size: cover; }
+      body .landing-page-container #steamboat-landing-page .steamboat-logo {
+        width: 320px;
+        height: 20%;
+        margin: 120px auto 0px;
+        background: url(../img/steamboat_white.svg) no-repeat;
+        background-size: 100%; }
+      body .landing-page-container #steamboat-landing-page .steamboat-landing-content {
+        width: 80%;
+        margin: 20px auto;
         text-align: center;
-        padding: 14px;
-        border-radius: 20px;
+        color: #fff;
+        font-family: 'Montserrat', sans-serif; }
+        body .landing-page-container #steamboat-landing-page .steamboat-landing-content h2 {
+          margin: 0px auto 40px;
+          font-size: 60px;
+          width: 900px;
+          font-weight: 700; }
+          @media screen and (max-width: 1100px) {
+            body .landing-page-container #steamboat-landing-page .steamboat-landing-content h2 {
+              font-size: 45px;
+              width: 670px; } }
+          @media screen and (max-width: 900px) {
+            body .landing-page-container #steamboat-landing-page .steamboat-landing-content h2 {
+              font-size: 38px;
+              width: 100%; } }
+        body .landing-page-container #steamboat-landing-page .steamboat-landing-content p {
+          font-weight: 400;
+          font-size: 19px; }
+      body .landing-page-container #steamboat-landing-page .how-it-works-cta {
+        font-size: 27px;
+        width: 287px;
+        padding: 18px 9px;
+        margin: 104px auto;
+        background: #fff;
+        text-align: center;
+        color: #4766b0;
+        font-weight: 400;
+        letter-spacing: 2px;
         cursor: pointer; }
-  body #landing-page {
-    display: none;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    z-index: 3;
-    background: #fff; }
-    body #landing-page #map-stage {
+      body .landing-page-container #steamboat-landing-page .landing-map-cta {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        color: #fff;
+        background: #ef4335;
+        text-align: center;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: 30px;
+        padding: 20px 0;
+        letter-spacing: 4px; }
+    body .landing-page-container .info-landing-page {
+      width: 100%;
+      height: 50%;
+      background: #fff;
       position: absolute;
-      left: 50%;
-      top: 0;
-      -ms-transform: translateX(-50%);
-      -webkit-transform: translateX(-50%);
-      transform: translateX(-50%);
-      width: 1000px;
-      height: 500px; }
-    body #landing-page #us-map {
-      position: absolute;
-      left: 50%;
-      bottom: 0%;
-      -ms-transform: translate(-50%);
-      -webkit-transform: translate(-50%);
-      transform: translate(-50%);
-      width: 800px;
-      height: auto; }
-    body #landing-page svg .state {
-      fill: #fff;
-      stroke: #000;
-      stroke-width: 1px;
-      stroke-opacity: 1;
-      stroke-linejoin: round;
-      stroke-dasharray: none;
-      cursor: pointer; }
-    body #landing-page svg .state-stage {
-      display: none; }
-    body #landing-page svg .state-stage#CA-stage {
-      display: block; }
-    body #landing-page svg .territory {
-      opacity: 0;
-      fill: #E0E0E0;
-      stroke: #646464;
-      stroke-width: 1;
-      stroke-opacity: 1; }
-    body #landing-page svg .territoryborder {
-      opacity: 0;
-      fill: none;
-      stroke: #A9A9A9;
-      stroke-width: 2; }
-    body #landing-page svg .border {
-      opacity: 0;
-      fill: none;
-      stroke: #A9A9A9;
-      stroke-width: 2; }
-    body #landing-page svg .circle {
-      opacity: 1;
-      fill: #E0E0E0;
-      stroke: #646464;
-      stroke-width: 1; }
+      top: 50%; }
+      body .landing-page-container .info-landing-page .steamboat-logo {
+        width: 320px;
+        height: 20%;
+        margin: 120px auto 0px;
+        background: url(../img/steamboat_blue.svg) no-repeat;
+        background-size: 100%; }
+      body .landing-page-container .info-landing-page .info-content-container {
+        width: 1100px;
+        margin: 20px auto; }
+        body .landing-page-container .info-landing-page .info-content-container .info-content {
+          width: 290px;
+          display: inline-block;
+          margin: 0px 110px 0px 0px;
+          text-align: center; }
+          body .landing-page-container .info-landing-page .info-content-container .info-content .user-pin {
+            background: url(../img/pin.svg) no-repeat;
+            width: 100px;
+            height: 100px;
+            background-size: 100%;
+            margin: 0px 0px 40px 40px; }
+          body .landing-page-container .info-landing-page .info-content-container .info-content h3 {
+            color: #4766b0;
+            font-size: 20px; }
+          body .landing-page-container .info-landing-page .info-content-container .info-content .camera-pin {
+            background: url(../img/gopro.svg) no-repeat;
+            width: 100px;
+            height: 100px;
+            background-size: 100%;
+            margin: 25px auto; }
+          body .landing-page-container .info-landing-page .info-content-container .info-content .custom-pin {
+            background: url(../img/balloon.svg) no-repeat;
+            width: 100px;
+            height: 130px;
+            background-size: 100%;
+            margin: 0px auto; }
+        body .landing-page-container .info-landing-page .info-content-container .custom {
+          margin-right: 0px; }
+      body .landing-page-container .info-landing-page .landing-map-cta {
+        font-size: 27px;
+        width: 287px;
+        padding: 18px 9px;
+        margin: 104px auto;
+        background: #ef4335;
+        text-align: center;
+        color: #fff;
+        font-weight: 400;
+        letter-spacing: 2px;
+        cursor: pointer; }
   body #map-container {
     position: relative;
     width: 100%;
