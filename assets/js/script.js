@@ -21,7 +21,7 @@ $(document).ready(function(){
 	var map = new mapboxgl.Map({
 		container: 'map', // container id
 		style: "mapbox://styles/bfmcgo2/cijp84irl001r8zkq9dakuq2g", //stylesheet location
-		center: [-106.84, 40.44], // starting position
+		center: [-106.83, 40.47], // starting position
 		zoom: 12, // starting zoom
 		maxBounds:mapBounds
 	});
@@ -31,7 +31,7 @@ $(document).ready(function(){
 
 	geocoder.options.container	= 'geocoder-container';
 	geocoder.options.country 	= 'us';
-	geocoder.options.proximity	= [-106.84, 40.44];
+	geocoder.options.proximity	= [-106.82, 40.44];
 	geocoder.options.flyTo		= true;
 
 	
@@ -237,7 +237,8 @@ $(document).ready(function(){
 
 			$("#latLngCoord").submit(function(event){
 				event.preventDefault();
-
+				map.scrollZoom.enable();
+				$(".exit-form").hide();
 				var $form = $(this);
 				formUrl = $form.attr("action");
 				var post = $form.serialize();
@@ -261,17 +262,7 @@ $(document).ready(function(){
 
 		$(".next-button").click(nextFormPage);
 		$(".previous-button").click(prevFormPage);
-		$(".add-pin-cta").hover(function(){
-			$(this).animate({
-				"width":"200px",
-				"font-size":"20px"
-			});
-		},function(){
-			$(this).animate({
-				"width":"100px",
-				"font-size":"16px"
-			});
-		})
+		
 
 		geocoder.on('result', function(r) {
 	      console.log(r);
@@ -280,6 +271,15 @@ $(document).ready(function(){
        			zoom:18
        		});
 	    });
+
+	    $(".header-container > .steamboat-logo").click(function(){
+	    	map.flyTo({
+       			center: [-106.83, 40.47],
+       			zoom:12
+       		});
+       		$(".video-container").fadeOut(300);
+
+	    })
 		
 		map.on("click", function(e){
 

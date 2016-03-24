@@ -73,12 +73,15 @@
 			</div>
 		</div>
 		<div id="map-container">
-			<div id='geocoder-container'></div>
-			<div class="add-pin-cta">
-				<h3>
-					Add Pin!
-				</h3>
-			</div>
+			<header class="header-container">
+				<div class="steamboat-logo"></div>
+				<div class="add-pin-cta">
+					<h3>
+						Add Pin!
+					</h3>
+				</div>
+				<div id='geocoder-container'></div>
+			</header>
 			<div class="add-content-form">
 				<form id="latLngCoord" action="assets/php/addMarkersToDatabase.php" method="post">
 					<div class="form-page">
@@ -131,6 +134,10 @@
 			<div id='map'></div>
 			<div class="pic-container"></div>
 			<div class="add-pin-instruct">Click The Map to Add a Pin!</div>
+			<footer class="footer">
+				<div class="promote-business-cta">PROMOTE YOUR BUSINESS</div>
+				<div class="contact-cta">CONTACT</div>
+			</footer>
 		</div>
 		</svg>
 		<script type="text/javascript" src="assets/js/script.js"></script>
