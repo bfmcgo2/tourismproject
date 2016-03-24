@@ -21,8 +21,8 @@
 		<script type="text/javascript" src="assets/js/jquery.easing.js"></script>
 		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.4/mapbox-gl.js'></script>
 		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.4/mapbox-gl.css' rel='stylesheet' />
-		<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.1.0/mapbox-gl-geocoder.js'></script>
-		<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.1.0/mapbox-gl-geocoder.css' type='text/css' />
+		<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v1.0.0/mapbox-gl-geocoder.js'></script>
+		<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v1.0.0/mapbox-gl-geocoder.css' type='text/css'/>
 
 		
 	</head>
@@ -32,8 +32,8 @@
 				<div class="steamboat-logo">
 				</div>
 				<div class="steamboat-landing-content">
-					<h2>Explore Steamboat Springs by using our interactive map.</h2>
-					<p>See all that Steamboat has to offer through user-generated videos.</p>
+					<h2>Map the 'Boat</h2>
+					<p>Whether you come to explore Mt. Werner, soak in the Springs, or walk down Lincoln Ave, this interactive map lets you explore and share the best spots in Steamboat.</p>
 				</div>
 				<div class="how-it-works-cta">HOW IT WORKS</div>
 				<div class="landing-map-cta">GET STARTED</div>
@@ -41,45 +41,39 @@
 			<div class="info-landing-page">
 				<div class="steamboat-logo"></div>
 				<div class="info-content-container">
-					<div class="info-content">
-						<div class="user-pin"></div>
-						<h3>EXPLORE THE PINS</h3>
-						<p>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur.
-						</p>
-						
-					</div>
-					<div class="info-content">
-						<div class="camera-pin"></div>
-						<h3>CREATE CONTENT</h3>
-						<p>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur.
-						</p>
-					</div>
-					<div class="info-content custom">
-						<div class="custom-pin"></div>
-						<h3>OWN A BUSINESS?</h3>
-						<p>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur.
-						</p>
+					<div class="info-content-wrap">
+						<div class="info-content">
+							<div class="user-pin"></div>
+							<h3>EXPLORE</h3>
+							<p>
+							Plan your next adventure by exploring the photos and
+							 videos that others have already pinned
+							</p>
+							
+						</div>
+						<div class="info-content">
+							<div class="camera-pin"></div>
+							<h3>PIN</h3>
+							<p>
+							Know a spot that hasn't been pinned yet?
+							Share your experience by adding a new pin to the map!
+							</p>
+						</div>
+						<div class="info-content custom">
+							<div class="custom-pin"></div>
+							<h3>PROMOTE</h3>
+							<p>
+							Are you a business in Steamboat? 
+							Help new visitors find you by sponsoring a featured pin.
+							</p>
+						</div>
 					</div>
 				</div>
 				<div class="landing-map-cta">GET STARTED</div>
 			</div>
 		</div>
 		<div id="map-container">
+			<div id='geocoder-container'></div>
 			<div class="add-pin-cta">
 				<h3>
 					Add Pin!
@@ -135,7 +129,6 @@
 				<div class="exit-form">x</div>
 			</div>
 			<div id='map'></div>
-			<div id='geocoder-container'></div>
 			<div class="pic-container"></div>
 			<div class="add-pin-instruct">Click The Map to Add a Pin!</div>
 		</div>

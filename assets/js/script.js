@@ -27,25 +27,34 @@ $(document).ready(function(){
 	});
 
 
-	var geocoder = new mapboxgl.Geocoder({
-	    container: 'geocoder-container', // Optional. Specify a unique container for the control to be added to.
-	});
-	map.addControl(geocoder);
-	console.log(geocoder);
+	var geocoder = new mapboxgl.Geocoder();
+
+	geocoder.options.container	= 'geocoder-container';
+	geocoder.options.country 	= 'us';
+	geocoder.options.proximity	= [-106.84, 40.44];
+	geocoder.options.flyTo		= true;
+
 	
-	geocoder.on('result',function(){
-		console.log("result");
-	});
+
+	map.addControl(geocoder);
+	geocoder.on('loading', function(r) {
+       console.log(geocoder._results);
+    });
+	
+
+		// map.flyTo({
+		// 	center: features[0].geometry.coordinates,
+		// 	zoom:18
+		// });
+	
+
+	
 	// --------------------------Mapbox JS Map-----------------
 	
 
 	map.on('style.load', function (data) {
+
 		// php file grabbing data from Sql
-		// console.log("hello");
-		geocoder.on('result',function(){
-			console.log("result");
-		})
-		
 		$.getJSON("/assets/php/getMarkerData.php").done(handleMarkerData);
 		
 		map.doubleClickZoom.disable();
@@ -136,7 +145,8 @@ $(document).ready(function(){
 					"instagramID":pin.instaID,
 					"videoURL": pin.videoURL,
 					"title":"balloon",
-					"marker-symbol": "circusball"
+					"marker-symbol": "pin-2",
+					"location": pin.location
 				};
 				featuresArray.push(features);
 			});
@@ -165,7 +175,7 @@ $(document).ready(function(){
 
 			});
 			userAddPinsToMap();
-			// console.log(coordinates);
+			
 		}
 
 		// END GEOJSON CONSTRUCTION
@@ -263,8 +273,20 @@ $(document).ready(function(){
 			});
 		})
 
+		geocoder.on('result', function(r) {
+	      console.log(r);
+	       map.flyTo({
+       			center: r.result.geometry.coordinates,
+       			zoom:18
+       		});
+	    });
 		
 		map.on("click", function(e){
+
+			console.log("click");
+			$(".video-container").fadeOut(300);
+			$("iframe").remove();
+			$(".pic-container").remove().css({"display":"none"});
 
 			if ($(".add-content-form").hasClass("active-class")) {
 				console.log("put lat/long in input field")
@@ -283,42 +305,71 @@ $(document).ready(function(){
 				if (err) throw err;
 
 				if (features.length) {
-					$("#map-container").append("<div class=pic-container></div>");
-					$(".pic-container").fadeIn(200);
+					map.scrollZoom.disable();
 					// clicked an existing pin, show instagram/video/etc
 					var instaID= features[0].properties.instagramID;
-					console.log(features[0]);
+					var locationID= features[0].properties.location;
+
+					console.log(locationID);
 					var instagramLocationAPIURL = "https://api.instagram.com/v1/locations/"+instaID+"/media/recent?access_token=2178978543.76c0077.c6b582cd7f444dd3b439414c5a9c8949&count=20&callback=?";
 								//"https://api.instagram.com/v1/locations/"+location+"/media/recent?access_token=2178978543.76c0077.c6b582cd7f444dd3b439414c5a9c8949&callback=?"
+					
 					$.getJSON(instagramLocationAPIURL).done(function( response ){
-
-						console.log(response);
-						for (var i = 0; i < 20; i++) {
+						$(".instagram-cta").click(function(){
+							$(".pic-container").remove().css({"display":"none"});
+							$("#map-container").append("<div class=pic-container></div>");
+							$(".pic-container").fadeIn(200);
 							console.log(response);
-							$(".pic-container").append("<a target='_blank' href='" + response.data[i].link +
-							"'><img src='" + response.data[i].images.thumbnail.url +"'></img></a>").fadeIn(200);
-							$(".pic-container a").css({
-								"display":"none",
-							}).delay(200).fadeIn(400);
-							
-
-						}
+							for (var i = 0; i < 9; i++) {
+								console.log(response);
+								$(".pic-container").append("<a target='_blank' href='" + response.data[i].link +
+								"'><img src='" + response.data[i].images.thumbnail.url +"'></img></a>").fadeIn(200);
+								$(".pic-container a").css({
+									"display":"none",
+								}).delay(200).fadeIn(400);
+							}
+						});
 					});
+					
 					
 					var videoURL = features[0].properties.videoURL;
 					var vimeoID = videoURL.match(/vimeo.com\/(.+)/);
 					var youtubeID= videoURL.match(/v=(.+)/);
-
+					
+					// Appending Video Container
 					var videoContainer = document.createElement("div");
 					videoContainer.setAttribute("class","video-container");
 					document.querySelector("#map-container").appendChild(videoContainer);
+					
+					// Appending Video Details Container
+					var videoPreviewContainer = document.createElement("div");
+					videoPreviewContainer.setAttribute("class","video-preview-container");
+					videoContainer.appendChild(videoPreviewContainer);
+					
+					// Appending Camera Button
+					var cameraTypeButton = document.createElement("div");
+					cameraTypeButton.setAttribute("class","camera-type-cta");
+					videoPreviewContainer.appendChild(cameraTypeButton);
+					var cameraTypeCopy = document.createElement("h3");
+					cameraTypeButton.appendChild(cameraTypeCopy);
+					$('.camera-type-cta > h3').html("CAMERA TYPE");
+					
+					// Appending Instagram Button
+					var instagramCTA = document.createElement("div");
+					instagramCTA.setAttribute("class","instagram-cta");
+					videoPreviewContainer.appendChild(instagramCTA);
+					var instagramCopy = document.createElement("h3");
+					instagramCTA.appendChild(instagramCopy);
+					$('.instagram-cta > h3').html("INSTAGRAM FEED");
+					
+					// Appending Location Tag
+					var locationIdentifier =document.createElement("div");
+					locationIdentifier.setAttribute("class","location-identifier");
+					videoPreviewContainer.appendChild(locationIdentifier);
+					var locationIdCopy = document.createElement("h3");
+					locationIdentifier.appendChild(locationIdCopy);
+					$('.location-identifier > h3').html(locationID.toUpperCase());
 
-					$(".video-container").click(function(){
-						console.log("click");
-						$(this).fadeOut(300);
-						$("iframe").remove();
-						$(".pic-container").remove().css({"display":"none"});
-					});
 
 					var createVideo = document.createElement("iframe");
 					createVideo.setAttribute("class", "video-preview");
@@ -331,7 +382,7 @@ $(document).ready(function(){
 					}
 					console.log(videoContainer);
 					console.log(createVideo);
-					videoContainer.appendChild(createVideo);
+					videoPreviewContainer.appendChild(createVideo);
 
 					// Get coordinates from the symbol and center the map on those coordinates
 					map.flyTo({
@@ -356,7 +407,7 @@ $(document).ready(function(){
 								]
 							},
 							"properties":{
-								"marker-symbol":"circusball"
+								"marker-symbol":"pin-2"
 							}
 						};
 						featuresArray.push(newMarker);
@@ -375,12 +426,14 @@ $(document).ready(function(){
 								]
 							},
 							"properties":{
-								"marker-symbol":"circusball"
+								"marker-symbol":"pin-2"
 							}
 						};
 						featuresArray.push(newMarker);
 						source.setData(dataStructure);
 					}
+				}else{
+					map.scrollZoom.enable();
 				}
 			});
 		});

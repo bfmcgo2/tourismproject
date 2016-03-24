@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 include("connectDatabase.php");
 
-$sql="SELECT lat,lng,videoID,activation,instaID FROM coordinates";
+$sql="SELECT lat,lng,videoID,activation,instaID,location FROM coordinates";
 
 
 $records = mysqli_query($con,$sql);
@@ -18,7 +18,8 @@ $marker_content = array();
 					$row["lat"]
 				),
 				"videoURL" 		=> $row["videoID"],
-				"instaID"		=> $row["instaID"]
+				"instaID"		=> $row["instaID"],
+				"location"		=> $row['location']
 			));
 		}else{
 
